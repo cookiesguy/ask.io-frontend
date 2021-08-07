@@ -1,0 +1,19 @@
+:root {
+   --white: #ffff;
+   --light-gray: #e0dfdf;
+}
+
+html,
+body {
+   height: 100%;
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-size: 16px;
+}
+#root {
+   height: 100%;
+}
+.App {
+   height: 100%;
+}

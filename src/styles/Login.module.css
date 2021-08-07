@@ -1,0 +1,44 @@
+@import '../globalStyle.css';
+
+.bannerImage {
+   width: 40rem;
+   height: 30rem;
+}
+
+.loginButtons {
+   display: flex;
+   flex-direction: column;
+
+   justify-content: space-evenly;
+}
+.loginButtons > div {
+   height: 300px;
+   display: flex;
+   justify-content: space-evenly;
+   flex-direction: column;
+}
+
+.loginButtons > div > button {
+   padding: 0px 2rem;
+   display: flex;
+   justify-content: space-evenly;
+   width: 300px;
+   align-items: center;
+   border: 1px solid var(--light-gray);
+   box-sizing: border-box;
+   border-radius: 20px;
+   background-color: var(--white);
+   cursor: pointer;
+}
+
+.buttonIcon {
+   height: 2rem;
+   width: 2rem;
+}
+
+.loginContainer {
+   display: flex;
+   justify-content: space-evenly;
+   padding: 40px 80px;
+   flex-wrap: wrap-reverse;
+}
