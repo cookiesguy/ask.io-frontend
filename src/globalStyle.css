@@ -1,11 +1,11 @@
 :root {
    --white: #ffff;
    --light-gray: #e0dfdf;
+   --wrap-color: rgba(0, 0, 0, 0.5);
 }
 
 html,
 body {
-   height: 100%;
    margin: 0;
    padding: 0;
    box-sizing: border-box;
@@ -16,4 +16,5 @@ body {
 }
 .App {
    height: 100%;
+   position: relative;
 }

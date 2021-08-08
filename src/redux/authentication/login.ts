@@ -1,9 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from 'app/store';
+import { setItem } from 'utils/storeRage';
+import { loginThunk } from './thunk';
 
 export type UserInfo = {
    userName: string;
    email: string;
+   imageUrl: string;
    token: string;
 };
 
@@ -19,6 +22,7 @@ const initialState: LoginState = {
       userName: '',
       email: '',
       token: '',
+      imageUrl: '',
    },
    loading: false,
 };
@@ -26,17 +30,30 @@ const initialState: LoginState = {
 export const loginSlice = createSlice({
    name: 'login',
    initialState,
-   // The `reducers` field lets us define reducers and generate associated actions
    reducers: {
       logout: state => {
          state.isLoggedIn = false;
-         state.user = {
-            userName: '',
-            email: '',
-            token: '',
-         };
+         state.user = initialState.user;
       },
       login: (state, action) => {},
+   },
+
+   extraReducers: builder => {
+      builder.addCase(loginThunk.pending, state => {
+         state.loading = true;
+      });
+      builder.addCase(loginThunk.fulfilled, (state, action) => {
+         const { userInfo, access_token } = action.payload;
+         state.loading = false;
+         setItem('token', access_token);
+         state.user = {
+            userName: userInfo.name,
+            email: userInfo.email,
+            imageUrl: userInfo.imageUrl,
+            token: access_token,
+         };
+         state.isLoggedIn = true;
+      });
    },
 });
 

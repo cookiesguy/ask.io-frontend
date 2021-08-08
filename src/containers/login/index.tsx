@@ -1,25 +1,16 @@
 import { useAppSelector, useAppDispatch } from 'app/hooks';
-import { Login } from 'components/Login';
-import {
-   logout,
-   selectLoading,
-   selectLogin,
-   sendLoginRequest,
-} from 'redux/login/loginSlice';
+import { Login } from 'components/login';
+import { logout, selectLoading, selectLogin } from 'redux/authentication/login';
+import { loginThunk } from 'redux/authentication/thunk';
+import { User } from 'interface';
 
 export default function LoginContainer() {
    const dispatch = useAppDispatch();
    const isLoggedIn = useAppSelector(selectLogin);
    const isLoading = useAppSelector(selectLoading);
 
-   const dispatchLogin = () => {
-      dispatch(
-         sendLoginRequest({
-            userName: 'abc',
-            email: 'xyz@bcc',
-            token: 'abcd',
-         })
-      );
+   const dispatchLogin = (user: User) => {
+      dispatch(loginThunk(user));
    };
 
    const dispatchLogout = () => {
@@ -32,6 +23,6 @@ export default function LoginContainer() {
          isLoggedIn={isLoggedIn}
          dispatchLogin={dispatchLogin}
          dispatchLogout={dispatchLogout}
-      ></Login>
+      />
    );
 }

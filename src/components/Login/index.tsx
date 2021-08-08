@@ -1,26 +1,36 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { useCallback } from 'react';
 import { GoogleLogin } from 'react-google-login';
-import FacebookLogin from 'react-facebook-login-typed';
+import FacebookLogin from 'react-facebook-login';
 import LoginBanner from 'images/loginBanner.svg';
 import GoogleIcon from 'images/icons/google.svg';
 import FacebookIcon from 'images/icons/facebook.svg';
 import GithubIcon from 'images/icons/github.svg';
-import loginStyles from 'styles/Login.module.css';
-import { LoginLayout } from 'components/Layout/LoginLayout';
+import loginStyles from 'styles/login.module.css';
+import commonStyles from 'styles/common/common.module.css';
+import { LoginLayout } from 'components/layout/loginLayout';
 import { FACEBOOK_APP_ID_TEST, GOOGLE_CLIENT_ID } from 'config/constants';
+import { User } from 'interface';
 
 interface PropsType {
    isLoading: boolean;
    isLoggedIn: boolean;
-   dispatchLogin: VoidFunction;
-   dispatchLogout: VoidFunction;
+   dispatchLogin: (user: User) => void;
+   dispatchLogout: () => void;
 }
 
 export function Login(props: PropsType) {
-   const responseGoogle = useCallback((response: any): void => {
-      console.log(response);
-   }, []);
+   const responseGoogle = useCallback(
+      (response: any): void => {
+         const { name, email, imageUrl } = response.profileObj;
+         const user: User = {
+            email: email,
+            userInfo: `${name},${imageUrl}`,
+         };
+         props.dispatchLogin(user);
+      },
+      [props]
+   );
 
    const responseFacebook = useCallback((response: any) => {
       console.log(response);
@@ -28,21 +38,37 @@ export function Login(props: PropsType) {
 
    return (
       <LoginLayout>
+         {props.isLoading && (
+            <div className={commonStyles.wrapContainer}>
+               <div className={commonStyles.ldsRoller}>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
+               </div>
+            </div>
+         )}
          <div className={loginStyles.loginContainer}>
-            <div className={loginStyles.loginButtons}>
+            <div className={loginStyles.wrapButtonContainer}>
                <div>
                   <GoogleLogin
+                     autoLoad={false}
                      clientId={GOOGLE_CLIENT_ID}
                      render={renderProps => (
                         <button
+                           className={loginStyles.loginButton}
                            onClick={renderProps.onClick}
                            disabled={renderProps.disabled}
                         >
-                           <p>Login with Google</p>
                            <img
                               className={loginStyles.buttonIcon}
                               src={GoogleIcon}
                            ></img>
+                           <p>Login with Google</p>
                         </button>
                      )}
                      buttonText="Login"
@@ -52,28 +78,23 @@ export function Login(props: PropsType) {
                   />
                   <FacebookLogin
                      appId={FACEBOOK_APP_ID_TEST}
-                     autoLoad
+                     autoLoad={false}
                      callback={responseFacebook}
-                     render={renderProps => (
-                        <button
-                           onClick={renderProps.onClick}
-                           disabled={renderProps.isDisabled}
-                        >
-                           <p>Login with Facebook</p>
-                           <img
-                              className={loginStyles.buttonIcon}
-                              src={FacebookIcon}
-                           ></img>
-                        </button>
-                     )}
+                     cssClass={loginStyles.loginButton}
+                     icon={
+                        <img
+                           className={loginStyles.buttonIcon}
+                           src={FacebookIcon}
+                        ></img>
+                     }
                   />
 
-                  <button>
-                     <p>Login with Github</p>
+                  <button className={loginStyles.loginButton}>
                      <img
                         className={loginStyles.buttonIcon}
                         src={GithubIcon}
                      ></img>
+                     <p>Login with Github</p>
                   </button>
                </div>
             </div>

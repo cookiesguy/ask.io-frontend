@@ -1,4 +1,4 @@
-import styles from 'styles/Layout/LoginLayout.module.css';
+import styles from 'styles/layout/loginLayout.module.css';
 import Logo from 'images/icons/logo.svg';
 
 export function LoginLayout({ children }: any) {
