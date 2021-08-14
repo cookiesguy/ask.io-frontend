@@ -6,11 +6,11 @@ import LoginBanner from 'images/loginBanner.svg';
 import GoogleIcon from 'images/icons/google.svg';
 import FacebookIcon from 'images/icons/facebook.svg';
 import GithubIcon from 'images/icons/github.svg';
-import loginStyles from 'styles/login.module.css';
-import commonStyles from 'styles/common/common.module.css';
+import commonStyles from 'shared/styles/common.module.css';
 import { LoginLayout } from 'components/layout/loginLayout';
 import { FACEBOOK_APP_ID_TEST, GOOGLE_CLIENT_ID } from 'config/constants';
 import { User } from 'interface';
+import loginStyles from './login.module.css';
 
 interface PropsType {
    isLoading: boolean;

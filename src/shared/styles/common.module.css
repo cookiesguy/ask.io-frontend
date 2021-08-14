@@ -18,6 +18,15 @@
    justify-content: center;
 }
 
+.body {
+   margin-left: 220px;
+   height: 100%;
+}
+
+.fullContainer {
+   height: 100%;
+}
+
 .ldsRoller {
    display: inline-block;
    position: relative;

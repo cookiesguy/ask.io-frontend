@@ -1,0 +1,28 @@
+@import '../../globalStyle.css';
+
+.sideBar {
+   background-color: var(--blue);
+   color: var(--white);
+   width: 220px;
+   position: absolute;
+
+   top: 0;
+   bottom: 0;
+}
+
+.bar {
+   padding-top: 20px;
+   padding-right: 10px;
+   display: flex;
+   justify-content: flex-end;
+}
+
+.item {
+   display: flex;
+   align-items: center;
+   padding: 1.2rem 1.2rem;
+   cursor: pointer;
+}
+.item > span {
+   margin-left: 0.5rem;
+}
