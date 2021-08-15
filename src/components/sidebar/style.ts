@@ -5,7 +5,7 @@ export const SideBarContainer = styled.div`
    background-color: ${colors.blue80};
    color: ${colors.white};
    width: 220px;
-   position: absolute;
+   position: fixed;
    top: 0;
    bottom: 0;
 `;

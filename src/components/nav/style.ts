@@ -14,3 +14,13 @@ export const SearchIcon = styled.div`
    width: 25px;
    height: 25px;
 `;
+
+export const LogoutButton = styled.button`
+   background-color: ${colors.white};
+   border: 1px solid ${colors.white};
+   cursor: pointer;
+   margin-right: 20px;
+   display: flex;
+   align-items: center;
+   color: ${colors.blue80};
+`;

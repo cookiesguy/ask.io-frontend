@@ -6,6 +6,7 @@ import { Components } from 'shared/styles';
 interface Props {
    children: ReactElement;
 }
+
 export function HomeLayout(props: Props) {
    return (
       <Components.FullContainer>
