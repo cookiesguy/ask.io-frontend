@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from 'app/store';
+import { TOKEN_KEY } from 'config/constants';
 import { UserInfo } from 'interface';
-import { setItem } from 'utils/storeRage';
-import { loginThunk } from './thunk';
+import { setItem, removeItem } from 'utils/storeRage';
+import { loginThunk, getUserThunk } from './thunk';
 
 interface LoginState {
    isLoggedIn: boolean;
@@ -29,8 +30,12 @@ export const loginSlice = createSlice({
       logout: state => {
          state.isLoggedIn = false;
          state.user = initialState.user;
+         removeItem(TOKEN_KEY);
+         state.loading = false;
       },
-      login: (state, action) => {},
+      makeLoading: state => {
+         state.loading = true;
+      },
    },
 
    extraReducers: builder => {
@@ -41,13 +46,31 @@ export const loginSlice = createSlice({
          const { userInfo, access_token } = action.payload;
 
          state.loading = false;
-         setItem('token', access_token);
+         setItem(TOKEN_KEY, access_token);
          state.user = {
             id: userInfo._id,
             userName: userInfo.name,
             email: userInfo.email,
             imageUrl: userInfo.imageUrl,
             token: access_token,
+         };
+         state.isLoggedIn = true;
+      });
+
+      builder.addCase(getUserThunk.pending, state => {
+         state.loading = true;
+      });
+
+      builder.addCase(getUserThunk.fulfilled, (state, action) => {
+         const { email, imageUrl, name, _id } = action.payload;
+         const { arg } = action.meta;
+         state.loading = false;
+         state.user = {
+            id: _id,
+            userName: name,
+            email: email,
+            imageUrl: imageUrl,
+            token: arg,
          };
          state.isLoggedIn = true;
       });
@@ -60,6 +83,6 @@ export const selectUser = (state: RootState) => state.login.user;
 
 export const selectLoading = (state: RootState) => state.login.loading;
 
-export const { logout, login } = loginSlice.actions;
+export const { logout, makeLoading } = loginSlice.actions;
 
 export default loginSlice.reducer;

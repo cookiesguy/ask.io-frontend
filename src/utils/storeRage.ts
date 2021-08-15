@@ -6,3 +6,7 @@ export const getItem = (key: string) => {
    const result = localStorage.getItem(key);
    return result;
 };
+
+export const removeItem = (key: string) => {
+   localStorage.removeItem(key);
+};

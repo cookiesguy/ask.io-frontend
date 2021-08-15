@@ -22,3 +22,20 @@ export async function fetchApi(
       alert(error);
    }
 }
+
+export async function getApi(url: string, token: string) {
+   try {
+      const res = await fetch(url, {
+         method: 'GET',
+         headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+         },
+      });
+
+      const data = await res.json();
+      return data;
+   } catch (error) {
+      alert(error);
+   }
+}
