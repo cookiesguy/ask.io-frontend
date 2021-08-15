@@ -1,19 +1,19 @@
+import { ReactElement } from 'react';
 import { Nav } from 'components/nav';
 import { SideBar } from 'components/sidebar';
-import { ReactElement } from 'react';
-import commonStyles from 'shared/styles/common.module.css';
+import { Components } from 'shared/styles';
 
 interface Props {
    children: ReactElement;
 }
 export function HomeLayout(props: Props) {
    return (
-      <div className={commonStyles.fullContainer}>
+      <Components.FullContainer>
          <SideBar></SideBar>
-         <div className={commonStyles.body}>
+         <Components.Body>
             <Nav></Nav>
             {props.children}
-         </div>
-      </div>
+         </Components.Body>
+      </Components.FullContainer>
    );
 }

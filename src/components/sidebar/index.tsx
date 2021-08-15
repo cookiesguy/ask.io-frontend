@@ -7,7 +7,7 @@ import {
    Menu,
 } from '@material-ui/icons';
 import { SideBarItem } from 'interface';
-import styles from './sidebar.module.css';
+import { SideBarContainer, Bar, Item, Title } from './style';
 
 const items: SideBarItem[] = [
    {
@@ -39,16 +39,16 @@ const items: SideBarItem[] = [
 
 export function SideBar() {
    return (
-      <div className={styles.sideBar}>
-         <div className={styles.bar}>
+      <SideBarContainer>
+         <Bar>
             <Menu />
-         </div>
+         </Bar>
          {items.map((element: SideBarItem) => (
-            <div className={styles.item} key={element.title}>
+            <Item key={element.title}>
                {element.icon}
-               <span>{element.title}</span>
-            </div>
+               <Title>{element.title}</Title>
+            </Item>
          ))}
-      </div>
+      </SideBarContainer>
    );
 }

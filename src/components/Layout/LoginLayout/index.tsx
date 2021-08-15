@@ -1,14 +1,13 @@
-import Logo from 'images/icons/logo.svg';
-import styles from './loginLayout.module.css';
+import Logo from 'assets/images/icons/logo.svg';
+import { Header } from './style';
 
 export function LoginLayout({ children }: any) {
    return (
       <>
-         <div className={styles.header}>
-            <img src={Logo}></img>
-         </div>
+         <Header>
+            <img src={Logo} alt="logo"></img>
+         </Header>
          {children}
-         <div className={styles.footer}></div>
       </>
    );
 }

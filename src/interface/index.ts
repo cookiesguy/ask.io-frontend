@@ -3,6 +3,14 @@ export interface User {
    userInfo: string;
 }
 
+export type UserInfo = {
+   id: string;
+   userName: string;
+   email: string;
+   imageUrl: string;
+   token: string;
+};
+
 export interface SideBarItem {
    title: string;
    icon: any;

@@ -1,4 +1,4 @@
-import styles from './input.module.css';
+import { InputWrapper, InputElement, InputIcon } from './style';
 
 interface Props {
    placeHolder: string;
@@ -10,9 +10,9 @@ export function Input(props: Props) {
    const { placeHolder, icon } = props;
 
    return (
-      <div className={styles.inputWrapper}>
-         <input className={styles.input} placeholder={placeHolder}></input>
-         {icon && <div className={styles.icon}>{icon}</div>}
-      </div>
+      <InputWrapper>
+         <InputElement placeholder={placeHolder} />
+         {icon && <InputIcon>{icon}</InputIcon>}
+      </InputWrapper>
    );
 }

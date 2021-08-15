@@ -1,14 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from 'app/store';
+import { UserInfo } from 'interface';
 import { setItem } from 'utils/storeRage';
 import { loginThunk } from './thunk';
-
-export type UserInfo = {
-   userName: string;
-   email: string;
-   imageUrl: string;
-   token: string;
-};
 
 interface LoginState {
    isLoggedIn: boolean;
@@ -19,6 +13,7 @@ interface LoginState {
 const initialState: LoginState = {
    isLoggedIn: false,
    user: {
+      id: '',
       userName: '',
       email: '',
       token: '',
@@ -44,9 +39,11 @@ export const loginSlice = createSlice({
       });
       builder.addCase(loginThunk.fulfilled, (state, action) => {
          const { userInfo, access_token } = action.payload;
+
          state.loading = false;
          setItem('token', access_token);
          state.user = {
+            id: userInfo._id,
             userName: userInfo.name,
             email: userInfo.email,
             imageUrl: userInfo.imageUrl,

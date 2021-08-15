@@ -31,3 +31,11 @@ body {
    height: 100%;
    position: relative;
 }
+
+.kep-login-facebook {
+   font-family: Poppins !important;
+   color: #080808 !important;
+   text-transform: none !important;
+   font-weight: normal !important;
+   font-size: 0.85rem !important;
+}

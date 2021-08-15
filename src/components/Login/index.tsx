@@ -1,16 +1,23 @@
-/* eslint-disable jsx-a11y/alt-text */
 import { useCallback } from 'react';
 import { GoogleLogin } from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
-import LoginBanner from 'images/loginBanner.svg';
-import GoogleIcon from 'images/icons/google.svg';
-import FacebookIcon from 'images/icons/facebook.svg';
-import GithubIcon from 'images/icons/github.svg';
-import commonStyles from 'shared/styles/common.module.css';
+import LoginBanner from 'assets/images/loginBanner.svg';
+import GoogleIcon from 'assets/images/icons/google.svg';
+import FacebookIcon from 'assets/images/icons/facebook.svg';
+import GithubIcon from 'assets/images/icons/github.svg';
 import { LoginLayout } from 'components/layout/loginLayout';
 import { FACEBOOK_APP_ID_TEST, GOOGLE_CLIENT_ID } from 'config/constants';
 import { User } from 'interface';
-import loginStyles from './login.module.css';
+import {
+   LoginButton,
+   LoginContainer,
+   BannerImage,
+   WrapButtonChild,
+   WrapButtonContainer,
+   ButtonIcon,
+   fbStyle,
+} from './style';
+import { FullLoader } from 'shared/components';
 
 interface PropsType {
    isLoading: boolean;
@@ -20,6 +27,7 @@ interface PropsType {
 }
 
 export function Login(props: PropsType) {
+   const { isLoading, dispatchLogin } = props;
    const responseGoogle = useCallback(
       (response: any): void => {
          const { name, email, imageUrl } = response.profileObj;
@@ -27,9 +35,9 @@ export function Login(props: PropsType) {
             email: email,
             userInfo: `${name},${imageUrl}`,
          };
-         props.dispatchLogin(user);
+         dispatchLogin(user);
       },
-      [props]
+      [dispatchLogin]
    );
 
    const responseFacebook = useCallback((response: any) => {
@@ -38,38 +46,21 @@ export function Login(props: PropsType) {
 
    return (
       <LoginLayout>
-         {props.isLoading && (
-            <div className={commonStyles.wrapContainer}>
-               <div className={commonStyles.ldsRoller}>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-               </div>
-            </div>
-         )}
-         <div className={loginStyles.loginContainer}>
-            <div className={loginStyles.wrapButtonContainer}>
-               <div>
+         <FullLoader isLoading={isLoading} />
+         <LoginContainer>
+            <WrapButtonContainer>
+               <WrapButtonChild>
                   <GoogleLogin
                      autoLoad={false}
                      clientId={GOOGLE_CLIENT_ID}
                      render={renderProps => (
-                        <button
-                           className={loginStyles.loginButton}
+                        <LoginButton
                            onClick={renderProps.onClick}
                            disabled={renderProps.disabled}
                         >
-                           <img
-                              className={loginStyles.buttonIcon}
-                              src={GoogleIcon}
-                           ></img>
+                           <ButtonIcon src={GoogleIcon} alt="google" />
                            <p>Login with Google</p>
-                        </button>
+                        </LoginButton>
                      )}
                      buttonText="Login"
                      onSuccess={responseGoogle}
@@ -80,28 +71,19 @@ export function Login(props: PropsType) {
                      appId={FACEBOOK_APP_ID_TEST}
                      autoLoad={false}
                      callback={responseFacebook}
-                     cssClass={loginStyles.loginButton}
-                     icon={
-                        <img
-                           className={loginStyles.buttonIcon}
-                           src={FacebookIcon}
-                        ></img>
-                     }
+                     buttonStyle={fbStyle}
+                     icon={<ButtonIcon src={FacebookIcon} alt="facebook" />}
                   />
-
-                  <button className={loginStyles.loginButton}>
-                     <img
-                        className={loginStyles.buttonIcon}
-                        src={GithubIcon}
-                     ></img>
+                  <LoginButton>
+                     <ButtonIcon src={GithubIcon} alt="github" />
                      <p>Login with Github</p>
-                  </button>
-               </div>
-            </div>
+                  </LoginButton>
+               </WrapButtonChild>
+            </WrapButtonContainer>
             <div>
-               <img className={loginStyles.bannerImage} src={LoginBanner}></img>
+               <BannerImage src={LoginBanner} alt="banner" />
             </div>
-         </div>
+         </LoginContainer>
       </LoginLayout>
    );
 }
